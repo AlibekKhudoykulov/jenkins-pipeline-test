@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Report') {
             steps {
-                sh 'echo "this is a report" > report.txt'
+                bat 'echo "this is a report" > report.txt'
             }
         }
     }
