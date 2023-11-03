@@ -10,25 +10,25 @@ pipeline {
     stages {
         stage('Requirements') {
             steps {
-                dir("${env.WORKSPACE}/Ch05/05_02-publish-reports"){
-                    sh 'python3 -m venv venv'
-                    sh './venv/bin/pip3 install --upgrade --requirement requirements.txt'
+                dir("${env.WORKSPACE}\\Ch05\\05_02-publish-reports"){
+                    bat 'python -m venv venv'
+                    bat '.\\venv\\Scripts\\pip install --upgrade --requirement requirements.txt'
                 }
             }
         }
         stage('Lint') {
             steps {
-                dir("${env.WORKSPACE}/Ch05/05_02-publish-reports"){
-                    sh 'venv/bin/flake8 --ignore=E501,E231 *.py'
-                    sh 'venv/bin/pylint --errors-only --disable=C0301 --disable=C0326 *.py'
+                dir("${env.WORKSPACE}\\Ch05\\05_02-publish-reports"){
+                    bat '.\\venv\\Scripts\\flake8 --ignore=E501,E231 *.py'
+                    bat '.\\venv\\Scripts\\pylint --errors-only --disable=C0301 --disable=C0326 *.py'
                 }
             }
         }
         stage('Test') {
             steps {
-                dir("${env.WORKSPACE}/Ch05/05_02-publish-reports"){
-                    sh('''
-                        venv/bin/coverage run -m pytest -v test_*.py \
+                dir("${env.WORKSPACE}\\Ch05\\05_02-publish-reports"){
+                    bat('''
+                        .\\venv\\Scripts\\coverage run -m pytest -v test_*.py ^
                             --junitxml=pytest_junit.xml
                     ''')
                 }
@@ -48,8 +48,8 @@ pipeline {
 
     post {
         always {
-            dir("${env.WORKSPACE}/Ch05/05_02-publish-reports"){
-                sh 'venv/bin/coverage xml'
+            dir("${env.WORKSPACE}\\Ch05\\05_02-publish-reports"){
+                bat '.\\venv\\Scripts\\coverage xml'
             }
 
             junit allowEmptyResults: true, testResults: '**/pytest_junit.xml'
