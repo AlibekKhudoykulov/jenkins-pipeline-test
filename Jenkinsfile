@@ -10,10 +10,8 @@ pipeline {
     stages {
         stage('Requirements') {
             steps {
-                dir("${env.WORKSPACE}\\Ch05\\05_02-publish-reports"){
-                    bat 'python -m venv venv'
-                    bat '.\\venv\\Scripts\\pip install --upgrade --requirement requirements.txt'
-                }
+                bat 'python -m venv venv'
+                bat '.\\venv\\Scripts\\pip install --upgrade -r requirements.txt'
             }
         }
         stage('Lint') {
